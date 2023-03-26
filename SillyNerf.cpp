@@ -282,7 +282,7 @@ void SetTransparent(Voxel* vArray) {
 
 //NN
 
-long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert) {
+long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert, int size) {
 	char* filename = (char*)"test.png";
 	char* title = (char*)"test png";
 	int imgWidth = maxWidth;
@@ -310,20 +310,20 @@ long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert) {
 
 	for (int x = minX; x != maxX; x += addX)
 		for (int y = minY; y != maxY; y += addY)
+		{
+			int newX = ((x - (maxWidthZ / 2 * zoom)) * c - (y - (maxWidthZ / 2 * zoom)) * s) + (maxWidthZ / 2 * zoom);
+			int newY = ((x - (maxWidthZ / 2 * zoom)) * s + (y - (maxWidthZ / 2 * zoom)) * c) + (maxWidthZ / 2 * zoom);
+			if ((newX < 0) || (newY < 0))
+				continue;
+			int tempIndex = newX * maxWHZ + newY * maxHeightZ;
 			for (int z = 0; z < maxHeightZ; z++)
 			{
-				//if(y>0)continue;
-				//if (x > 50)continue;
-				int newX = ((x - (maxWidthZ / 2 * zoom)) * c - (y - (maxWidthZ / 2 * zoom)) * s) + (maxWidthZ / 2 * zoom);
-				int newY = ((x - (maxWidthZ / 2 * zoom)) * s + (y - (maxWidthZ / 2 * zoom)) * c) + (maxWidthZ / 2 * zoom);
-				if ((newX < 0) || (newY < 0))
-					continue;
-				if (vArray[newX * maxWHZ + newY * maxHeightZ + z].color.a == 255)
+				if (vArray[tempIndex + z].color.a == 255)
 				{
-					imgBbuffer[(x + z * maxWidthZ) * 4 + 0] = vArray[newX * maxWHZ + newY * maxHeightZ + z].color.r;
-					imgBbuffer[(x + z * maxWidthZ) * 4 + 1] = vArray[newX * maxWHZ + newY * maxHeightZ + z].color.g;
-					imgBbuffer[(x + z * maxWidthZ) * 4 + 2] = vArray[newX * maxWHZ + newY * maxHeightZ + z].color.b;
-					imgBbuffer[(x + z * maxWidthZ) * 4 + 3] = vArray[newX * maxWHZ + newY * maxHeightZ + z].color.a;
+					imgBbuffer[(x + z * maxWidthZ) * 4 + 0] = vArray[tempIndex + z].color.r;
+					imgBbuffer[(x + z * maxWidthZ) * 4 + 1] = vArray[tempIndex + z].color.g;
+					imgBbuffer[(x + z * maxWidthZ) * 4 + 2] = vArray[tempIndex + z].color.b;
+					imgBbuffer[(x + z * maxWidthZ) * 4 + 3] = vArray[tempIndex + z].color.a;
 				}
 				/*
 				imgBbuffer[(x + z * maxWidthZ) * 4 + 0] = vArray[x * maxWHZ + y * maxHeightZ + z].color.r;
@@ -332,6 +332,7 @@ long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert) {
 				imgBbuffer[(x + z * maxWidthZ) * 4 + 3] = vArray[x * maxWHZ + y * maxHeightZ + z].color.a;
 				*/
 			}
+		}
 	//createPng((char*)"test2.png", 10, 10);
 	//writeImagePNG(filename, maxWidthZ, maxHeightZ, imgBbuffer, title);
 
@@ -448,39 +449,73 @@ void SaveImage(Voxel* vArray, int rotation, char* filename) {
 	free(imgBbuffer);
 };
 
-void RandomMutage(Voxel* vArray) {
-	int x = fast_rand() % maxWidthZ;
-	int y = fast_rand() % maxWidthZ;
-	int z = fast_rand() % maxHeightZ;
-	int color = fast_rand() % 4;
-	int step = (fast_rand() % 2)?1:-1;
-	TColor oldColor = vArray[x * maxWHZ + y * maxHeightZ + z].color;
-	switch (color)
+void RandomMutage(Voxel* vArray, int size) {
+	if (size == 1)
 	{
-	case 0:
-		oldColor.r += step;
-		break;
-	case 1:
-		oldColor.g += step;
-		break;
-	case 2:
-		oldColor.b += step;
-		break;
-	case 3:
-		oldColor.a += step;
-		break;
+		int x = fast_rand() % maxWidthZ;
+		int y = fast_rand() % maxWidthZ;
+		int z = fast_rand() % maxHeightZ;
+		int color = fast_rand() % 4;
+		int step = (fast_rand() % 2) ? 1 : -1;
+		TColor oldColor = vArray[x * maxWHZ + y * maxHeightZ + z].color;
+		switch (color)
+		{
+		case 0:
+			oldColor.r += step;
+			break;
+		case 1:
+			oldColor.g += step;
+			break;
+		case 2:
+			oldColor.b += step;
+			break;
+		case 3:
+			oldColor.a += step;
+			break;
+		}
+		vArray[x * maxWHZ + y * maxHeightZ + z].color = oldColor;
 	}
-	vArray[x * maxWHZ + y * maxHeightZ + z].color = oldColor;
+	else
+	{
+		int xMin = fast_rand() % ((int)(maxWidthZ / size));
+		int yMin = fast_rand() % ((int)(maxWidthZ / size));
+		int zMin = fast_rand() % ((int)(maxHeightZ / size));
+		int color = fast_rand() % 4;
+		int step = (fast_rand() % 2) ? 1 : -1;
+		for (int x = xMin* size; x < (xMin+1) * size; x++)
+			for (int y = yMin * size; y < (yMin + 1) * size; y++)
+				for (int z = zMin * size; z < (zMin + 1) * size; z++)
+				{
+					TColor oldColor = vArray[x * maxWHZ + y * maxHeightZ + z].color;
+					switch (color)
+					{
+					case 0:
+						oldColor.r += step;
+						break;
+					case 1:
+						oldColor.g += step;
+						break;
+					case 2:
+						oldColor.b += step;
+						break;
+					case 3:
+						oldColor.a += step;
+						break;
+					}
+					vArray[x * maxWHZ + y * maxHeightZ + z].color = oldColor;
+				}
+	}
+
 };
 
 void CopyArray(Voxel* vArray, Voxel* vArray2) {
-
-		for (int x = 0; x < maxWidthZ; x++)
+	memcpy(vArray2, vArray, sizeof(Voxel) * maxWidthZ * maxWidthZ * maxHeightZ);
+		/*for (int x = 0; x < maxWidthZ; x++)
 			for (int y = 0; y < maxWidthZ; y++)
 				for (int z = 0; z < maxHeightZ; z++)
 				{
 					vArray2[x * maxWHZ + y * maxHeightZ + z] = vArray[x * maxWHZ + y * maxHeightZ + z];
-				}
+				}*/
 }
 
 struct Voxel2 {
@@ -968,28 +1003,37 @@ int main()
 	Voxel* vArray = (Voxel*)malloc(sizeof(Voxel) * maxWidthZ * maxWidthZ * maxHeightZ);
 	Voxel* tempArray = (Voxel*)malloc(sizeof(Voxel) * maxWidthZ * maxWidthZ * maxHeightZ);
 
-	SetRandom(vArray);
-	//SetTransparent(vArray);
-	SetImage(vArray, images[0],0);
+	//SetRandom(vArray);
+	SetTransparent(vArray);
+	//SetImage(vArray, images[0],0);
 	SaveImage(vArray, -90,(char*)"test90.png");
 
 	long diff=0;
 	long bestdiff = 10000000000000000;
 
 	int addStep = 10;
+	//int addStep2 = 20;
 	int oldStep = 10;
 	long oldScoreDiff = 0;
 	long oldScore = 0;
 	long actDiff = 0;
 	int dir = 1;
+	int dir2 = 1;
+
+	double veryLongScore = 0;
+	double longScore = 0;
+	double shortScore = 0;
+
+	int size = 20;
 
 	for (long step = 0; step < 1000000; step++)
 	{
 		diff = 0;
 		CopyArray(vArray, tempArray);
-		for (long step2 = 0; step2 < addStep; step2++)RandomMutage(vArray);
-		diff += Compare(vArray, images[0], 0, true);
-		diff += Compare(vArray, images[1], -90, true);
+		//for (long step2 = 0; step2 < addStep; step2++)
+			RandomMutage(vArray, size);
+		diff += Compare(vArray, images[0], 0, true, size);
+		diff += Compare(vArray, images[1], -90, true, size);
 		if (diff <= bestdiff)
 		{
 			bestdiff = diff;
@@ -998,19 +1042,50 @@ int main()
 		{
 			CopyArray(tempArray, vArray);
 		}
-		if (step % 5000 == 0)
+
+		actDiff = oldScore - bestdiff;
+		veryLongScore = 0.99 * veryLongScore + 0.01 * actDiff;
+		longScore = 0.95 * longScore + 0.5 * actDiff;
+		shortScore = 0.9 * shortScore + 0.1 * actDiff;
+		oldScore = bestdiff;
+		if (step % 10 == 0)
 		{
-			if (oldScoreDiff > actDiff)
+			if (shortScore > veryLongScore)
+			{
 				dir *= -1;
+			}
+			addStep += dir;
+			if (addStep < 1)addStep = 1;
+		}
+		if (step % 100 == 0)
+		{
+			if (longScore > veryLongScore)
+			{
+				dir2 *= -1;
+			}
+			size += dir;
+			if (size < 1)size = 1;
+			if (size > 50)size = 50;
+		}
+		if (step % 100 == 0)
+		{
+			/*if (oldScoreDiff > actDiff)
+				dir *= -1;
+			if ((oldScoreDiff == actDiff)&&(dir==1))
+				dir = -1;
 			oldScoreDiff = actDiff;
 			actDiff= oldScore - bestdiff;
 			oldScore = bestdiff;
 			addStep += dir;
-			//SaveImage(vArray, 0, (char*)"test00.png");
-			//SaveImage(vArray, -90, (char*)"test90.png");
-			SaveVox6(tempArray);
+			if (addStep < 1)addStep = 1;*/
+			SaveImage(vArray, 0, (char*)"test00.png");
+			SaveImage(vArray, -90, (char*)"test90.png");
+			//SaveVox6(tempArray);
 		}
-		cout << bestdiff << " " << actDiff << " " << addStep << endl;
+		if (step % 1000 == 0)
+			SaveVox6(tempArray);
+		if (step % 50 == 0)
+			cout << bestdiff << " " << actDiff << " " << addStep << " " << size << " " << step % 100 << endl;
 	}
 	free(vArray);
 	free(tempArray);
