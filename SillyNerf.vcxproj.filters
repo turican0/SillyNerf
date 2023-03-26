@@ -19,9 +19,4 @@
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SillyNerf.h">
-      <Filter>Hlavičkové soubory</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>

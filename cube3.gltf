@@ -1,0 +1,465 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 288,
+      "max": [
+        79
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 80,
+      "max": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "count": 80,
+      "max": [
+        0.328125,
+        0.5
+      ],
+      "min": [
+        0.328125,
+        0.5
+      ],
+      "type": "VEC2"
+    }
+  ],
+  "asset": {
+    "generator": "voxedit 0.0.24.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1152,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1600,
+      "byteOffset": 1152,
+      "byteStride": 20,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 2752,
+      "uri": "data:application/octet-stream;base64,DgAAABEAAAAQAAAADgAAABAAAAAPAAAAKgAAAA8AAAAjAAAAKgAAACMAAAArAAAAEAAAAC4AAAAtAAAAEAAAAC0AAAAnAAAAIwAAACcAAABEAAAAIwAAAEQAAABDAAAAGAAAABwAAAAdAAAAGAAAAB0AAAAZAAAAGQAAAB4AAABKAAAAGQAAAEoAAABIAAAAHwAAAB0AAABJAAAAHwAAAEkAAABLAAAAOgAAADsAAABLAAAAOgAAAEsAAABKAAAADgAAAA8AAAATAAAADgAAABMAAAASAAAAIgAAACQAAAAjAAAAIgAAACMAAAAPAAAAEwAAADEAAAA0AAAAEwAAADQAAAAzAAAAIwAAAEMAAABFAAAAIwAAAEUAAAAxAAAACQAAAAgAAAAdAAAACQAAAB0AAAAcAAAACAAAAEAAAABBAAAACAAAAEEAAAALAAAAFwAAAEcAAABJAAAAFwAAAEkAAAAdAAAAKQAAAEEAAABHAAAAKQAAAEcAAAA5AAAAIgAAAA8AAAAQAAAAIgAAABAAAAAlAAAAKgAAACwAAAATAAAAKgAAABMAAAAPAAAAEAAAABUAAAAvAAAAEAAAAC8AAAAuAAAAEwAAADMAAAA1AAAAEwAAADUAAAAVAAAAPAAAAD4AAABBAAAAPAAAAEEAAABAAAAAPgAAAEgAAABKAAAAPgAAAEoAAABMAAAATQAAAEsAAABJAAAATQAAAEkAAABBAAAATgAAAEoAAABLAAAATgAAAEsAAABPAAAAAAAAAAEAAAAIAAAAAAAAAAgAAAAJAAAAAQAAADwAAAA9AAAAAQAAAD0AAAACAAAABgAAAD8AAABAAAAABgAAAEAAAAAIAAAAIAAAAD0AAAA/AAAAIAAAAD8AAAAmAAAAEgAAABMAAAAVAAAAEgAAABUAAAAUAAAALAAAADAAAAAxAAAALAAAADEAAAATAAAAFQAAADYAAAA3AAAAFQAAADcAAAAvAAAAMQAAAEUAAABGAAAAMQAAAEYAAAA2AAAAAAAAABgAAAAZAAAAAAAAABkAAAABAAAAAQAAAAQAAAA+AAAAAQAAAD4AAAA8AAAADAAAABkAAABIAAAADAAAAEgAAABCAAAAIQAAADIAAABCAAAAIQAAAEIAAAA+AAAAEQAAABQAAAAVAAAAEQAAABUAAAAQAAAAJQAAABAAAAAnAAAAJQAAACcAAAAoAAAAFQAAADUAAAA4AAAAFQAAADgAAAA2AAAAJwAAADYAAABGAAAAJwAAAEYAAABEAAAAAAAAAAkAAAAKAAAAAAAAAAoAAAADAAAAAwAAAAUAAAAaAAAAAwAAABoAAAAYAAAABwAAAAoAAAAcAAAABwAAABwAAAAbAAAADQAAABYAAAAbAAAADQAAABsAAAAaAAAAJAAAACgAAAAnAAAAJAAAACcAAAAjAAAAKwAAACMAAAAxAAAAKwAAADEAAAAwAAAAJwAAAC0AAAA3AAAAJwAAADcAAAA2AAAAMQAAADYAAAA4AAAAMQAAADgAAAA0AAAAAAAAAAAAAAAAAAAAAACoPgAAAD8AAAAAAAAAAAAAgD8AAKg+AAAAPwAAAAAAAIA/AACAPwAAqD4AAAA/AACAPwAAAAAAAAAAAACoPgAAAD8AAIA/AAAAAAAAgD8AAKg+AAAAPwAAgD8AAIA/AAAAAAAAqD4AAAA/AAAAAAAAAEAAAIA/AACoPgAAAD8AAIA/AAAAQAAAAAAAAKg+AAAAPwAAAAAAAEBAAACAPwAAqD4AAAA/AAAAAAAAQEAAAAAAAACoPgAAAD8AAIA/AABAQAAAAAAAAKg+AAAAPwAAgD8AAEBAAACAPwAAqD4AAAA/AAAAQAAAAAAAAIA/AACoPgAAAD8AAABAAACAPwAAAAAAAKg+AAAAPwAAgD8AAIA/AAAAAAAAqD4AAAA/AACAPwAAgD8AAIA/AACoPgAAAD8AAIA/AAAAQAAAgD8AAKg+AAAAPwAAgD8AAABAAAAAAAAAqD4AAAA/AAAAQAAAgD8AAAAAAACoPgAAAD8AAABAAACAPwAAgD8AAKg+AAAAPwAAAEAAAABAAAAAAAAAqD4AAAA/AAAAQAAAAEAAAIA/AACoPgAAAD8AAABAAAAAQAAAAAAAAKg+AAAAPwAAAEAAAEBAAACAPwAAqD4AAAA/AABAQAAAAAAAAAAAAACoPgAAAD8AAEBAAAAAAAAAgD8AAKg+AAAAPwAAQEAAAIA/AAAAAAAAqD4AAAA/AABAQAAAAEAAAAAAAACoPgAAAD8AAEBAAABAQAAAAAAAAKg+AAAAPwAAQEAAAEBAAACAPwAAqD4AAAA/AABAQAAAgD8AAIA/AACoPgAAAD8AAEBAAAAAQAAAgD8AAKg+AAAAPwAAAAAAAIA/AAAAQAAAqD4AAAA/AACAPwAAAAAAAABAAACoPgAAAD8AAAAAAACAPwAAgD8AAKg+AAAAPwAAgD8AAIA/AAAAQAAAqD4AAAA/AAAAAAAAgD8AAABAAACoPgAAAD8AAAAAAAAAQAAAgD8AAKg+AAAAPwAAAAAAAABAAAAAQAAAqD4AAAA/AACAPwAAAEAAAABAAACoPgAAAD8AAAAAAAAAQAAAAEAAAKg+AAAAPwAAgD8AAEBAAAAAQAAAqD4AAAA/AACAPwAAAAAAAIA/AACoPgAAAD8AAIA/AAAAAAAAAEAAAKg+AAAAPwAAAEAAAAAAAACAPwAAqD4AAAA/AACAPwAAQEAAAABAAACoPgAAAD8AAIA/AABAQAAAgD8AAKg+AAAAPwAAAEAAAEBAAACAPwAAqD4AAAA/AAAAQAAAAAAAAABAAACoPgAAAD8AAABAAACAPwAAAEAAAKg+AAAAPwAAAEAAAAAAAAAAQAAAqD4AAAA/AABAQAAAgD8AAIA/AACoPgAAAD8AAEBAAACAPwAAAEAAAKg+AAAAPwAAQEAAAABAAACAPwAAqD4AAAA/AAAAQAAAAEAAAABAAACoPgAAAD8AAABAAABAQAAAAEAAAKg+AAAAPwAAQEAAAABAAAAAQAAAqD4AAAA/AAAAQAAAQEAAAABAAACoPgAAAD8AAEBAAACAPwAAAEAAAKg+AAAAPwAAQEAAAABAAAAAQAAAqD4AAAA/AAAAAAAAAAAAAEBAAACoPgAAAD8AAAAAAACAPwAAQEAAAKg+AAAAPwAAgD8AAAAAAABAQAAAqD4AAAA/AAAAAAAAAEAAAEBAAACoPgAAAD8AAAAAAABAQAAAQEAAAKg+AAAAPwAAgD8AAEBAAABAQAAAqD4AAAA/AAAAQAAAAAAAAEBAAACoPgAAAD8AAIA/AACAPwAAQEAAAKg+AAAAPwAAgD8AAABAAABAQAAAqD4AAAA/AAAAQAAAgD8AAEBAAACoPgAAAD8AAABAAAAAQAAAQEAAAKg+AAAAPwAAAEAAAEBAAABAQAAAqD4AAAA/AABAQAAAAAAAAEBAAACoPgAAAD8AAEBAAABAQAAAQEAAAKg+AAAAPwAAQEAAAIA/AABAQAAAqD4AAAA/AABAQAAAAEAAAEBAAACoPgAAAD8AAIA/AACAPwAAQEAAAKg+AAAAPwAAgD8AAABAAABAQAAAqD4AAAA/AAAAQAAAgD8AAEBAAACoPgAAAD8AAABAAAAAQAAAQEAAAKg+AAAAPw=="
+    }
+  ],
+  "cameras": [
+    {
+      "name": "Camera 0",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    },
+    {
+      "name": "Camera 1",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    },
+    {
+      "name": "Camera 2",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    },
+    {
+      "name": "Camera 3",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    },
+    {
+      "name": "Camera 4",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    },
+    {
+      "name": "Camera 5",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    },
+    {
+      "name": "Camera 6",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    },
+    {
+      "name": "Camera 7",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    },
+    {
+      "name": "Camera 8",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    },
+    {
+      "name": "Camera 9",
+      "perspective": {
+        "zfar": 0.0,
+        "znear": 0.0
+      },
+      "type": "perspective"
+    }
+  ],
+  "images": [
+    {
+      "uri": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAYAAAAxWXB3AAAAUUlEQVR4XmP8DwQMDGcZMPDZ/wwDIX72/8DYy4DDv6PugaaN0fCB5AcS8sU7YL56D9R1D4jx0e/fEVAAM4BIhe/e3WV4//49w7179/DSQDWMAG3nExEB3OeNAAAAAElFTkSuQmCC"
+    }
+  ],
+  "materials": [
+    {
+      "name": "12212233867382499852",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "0",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 0,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "root"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -2.0,
+        0.0,
+        -1.0,
+        1.0
+      ],
+      "mesh": 0,
+      "name": "0"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 0"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 1"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 2"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 3"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 4"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 5"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 6"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 7"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 8"
+    },
+    {
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Camera 9"
+    }
+  ],
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    }
+  ]
+}
