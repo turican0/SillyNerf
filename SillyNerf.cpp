@@ -271,9 +271,9 @@ void SetTransparent(Voxel* vArray) {
 			{
 				Voxel tempvox;
 				tempvox.color.a = 0;
-				tempvox.color.r = 0x80;
-				tempvox.color.g = 0x80;
-				tempvox.color.b = 0x80;
+				tempvox.color.r = 0;
+				tempvox.color.g = 0;
+				tempvox.color.b = 0;
 
 				vArray[x * maxWHZ + y * maxHeightZ + z] = tempvox;
 			}
@@ -282,7 +282,85 @@ void SetTransparent(Voxel* vArray) {
 
 //NN
 
-long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert, int size) {
+void AddTranspColor(vector<TColor>** vArray) {
+	for (int x = 0; x < maxWidthZ; x++)
+		for (int y = 0; y < maxWidthZ; y++)
+			for (int z = 0; z < maxHeightZ; z++)
+			{
+				TColor color;
+				color.r = 0;
+				color.g = 0;
+				color.b = 0;
+				color.a = 0;
+
+				bool isIncluded = false;
+				for (int i = 0; i < vArray[x * maxWHZ + y * maxHeightZ + z]->size(); i++)
+					if ((color.r == (*vArray[x * maxWHZ + y * maxHeightZ + z])[i].r) &&
+						(color.g == (*vArray[x * maxWHZ + y * maxHeightZ + z])[i].g) &&
+						(color.b == (*vArray[x * maxWHZ + y * maxHeightZ + z])[i].b) &&
+						(color.a == (*vArray[x * maxWHZ + y * maxHeightZ + z])[i].a))
+						isIncluded = true;
+				if (!isIncluded)vArray[x * maxWHZ + y * maxHeightZ + z]->push_back(color);
+			}
+};
+
+void AddCanColor(vector<TColor>** vArray, imgInfo actImage, int rotation, bool invert) {
+	//int imgWidth = maxWidth;
+	//int imgHeight = maxHeight;
+	//Bit8u* imgBbuffer = (Bit8u*)malloc(maxWidthZ * maxHeightZ * 4);
+
+	float s = sin(rotation * 0.0174533);
+	float c = cos(rotation * 0.0174533);
+
+	int minX = 0;
+	int maxX = maxWidthZ;
+	int addX = 1;
+	int minY = 0;
+	int maxY = maxWidthZ;
+	int addY = 1;
+
+	float tempAddCenter = ((maxWidthZ - 1) * 0.5 * zoom);
+
+	for (int x = minX; x != maxX; x += addX)
+		for (int y = minY; y != maxY; y += addY)
+		{
+			int newX = ((x - tempAddCenter) * c - (y - tempAddCenter) * s) + tempAddCenter + 0.01;
+			int newY = ((x - tempAddCenter) * s + (y - tempAddCenter) * c) + tempAddCenter + 0.01;
+			if ((newX < 0) || (newY < 0))
+				continue;
+			int tempIndex = newX * maxWHZ + newY * maxHeightZ;
+			for (int z = 0; z < maxHeightZ; z++)
+			{
+				TColor color;
+				color.r = actImage.buffer[x + z * maxWidthZ].r;
+				color.g = actImage.buffer[x + z * maxWidthZ].g;
+				color.b = actImage.buffer[x + z * maxWidthZ].b;
+				color.a = actImage.buffer[x + z * maxWidthZ].a;
+				if ((color.r == 0x80) && (color.g == 0x80) && (color.b == 0x80))
+				{
+					color.r = 0;
+					color.g = 0;
+					color.b = 0;
+					color.a = 0;
+					vArray[tempIndex + z]->clear();
+					vArray[tempIndex + z]->push_back(color);
+				}
+				else
+				{
+					bool isIncluded = false;
+					for (int i = 0; i < vArray[tempIndex + z]->size(); i++)
+						if ((color.r == (*vArray[tempIndex + z])[i].r) &&
+							(color.g == (*vArray[tempIndex + z])[i].g) &&
+							(color.b == (*vArray[tempIndex + z])[i].b) &&
+							(color.a == (*vArray[tempIndex + z])[i].a))
+							isIncluded = true;
+					if (!isIncluded)vArray[tempIndex + z]->push_back(color);
+				}
+			}
+		}
+};
+
+long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert) {
 	char* filename = (char*)"test.png";
 	char* title = (char*)"test png";
 	int imgWidth = maxWidth;
@@ -292,9 +370,9 @@ long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert, int siz
 	for (int x = 0; x < maxWidthZ; x++)
 		for (int z = 0; z < maxHeightZ; z++)
 		{
-			imgBbuffer[(x + z * maxWidthZ) * 4 + 0] = 0x80;
-			imgBbuffer[(x + z * maxWidthZ) * 4 + 1] = 0x80;
-			imgBbuffer[(x + z * maxWidthZ) * 4 + 2] = 0x80;
+			imgBbuffer[(x + z * maxWidthZ) * 4 + 0] = 0;
+			imgBbuffer[(x + z * maxWidthZ) * 4 + 1] = 0;
+			imgBbuffer[(x + z * maxWidthZ) * 4 + 2] = 0;
 			imgBbuffer[(x + z * maxWidthZ) * 4 + 3] = 0;
 		}
 
@@ -308,11 +386,13 @@ long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert, int siz
 	int maxY = maxWidthZ;
 	int addY = 1;
 
+	float tempAddCenter = ((maxWidthZ - 1) * 0.5 * zoom);
+
 	for (int x = minX; x != maxX; x += addX)
 		for (int y = minY; y != maxY; y += addY)
 		{
-			int newX = ((x - (maxWidthZ / 2 * zoom)) * c - (y - (maxWidthZ / 2 * zoom)) * s) + (maxWidthZ / 2 * zoom);
-			int newY = ((x - (maxWidthZ / 2 * zoom)) * s + (y - (maxWidthZ / 2 * zoom)) * c) + (maxWidthZ / 2 * zoom);
+			int newX = ((x - tempAddCenter) * c - (y - tempAddCenter) * s) + tempAddCenter + 0.01;
+			int newY = ((x - tempAddCenter) * s + (y - tempAddCenter) * c) + tempAddCenter + 0.01;
 			if ((newX < 0) || (newY < 0))
 				continue;
 			int tempIndex = newX * maxWHZ + newY * maxHeightZ;
@@ -350,6 +430,7 @@ long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert, int siz
 				diff += abs(actImage.buffer[imgX + imgZ * actImage.width].r - imgBbuffer[(x + z * maxWidthZ) * 4 + 0]);
 				diff += abs(actImage.buffer[imgX + imgZ * actImage.width].g - imgBbuffer[(x + z * maxWidthZ) * 4 + 1]);
 				diff += abs(actImage.buffer[imgX + imgZ * actImage.width].b - imgBbuffer[(x + z * maxWidthZ) * 4 + 2]);
+				diff += 5*abs(actImage.buffer[imgX + imgZ * actImage.width].a - imgBbuffer[(x + z * maxWidthZ) * 4 + 3]);
 
 				//imgBbuffer[(x + z * maxWidthZ) * 4 + 0] = actImage.buffer[imgX + imgZ * actImage.width].r;
 				//imgBbuffer[(x + z * maxWidthZ) * 4 + 1] = actImage.buffer[imgX + imgZ * actImage.width].g;
@@ -358,10 +439,10 @@ long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert, int siz
 			}
 			else
 			{
-				diff += abs(0x80 - imgBbuffer[(x + z * maxWidthZ) * 4 + 0]);
-				diff += abs(0x80 - imgBbuffer[(x + z * maxWidthZ) * 4 + 1]);
-				diff += abs(0x80 - imgBbuffer[(x + z * maxWidthZ) * 4 + 2]);
-				diff += abs(0 - imgBbuffer[(x + z * maxWidthZ) * 4 + 3]);
+				diff += abs(0 - imgBbuffer[(x + z * maxWidthZ) * 4 + 0]);
+				diff += abs(0 - imgBbuffer[(x + z * maxWidthZ) * 4 + 1]);
+				diff += abs(0 - imgBbuffer[(x + z * maxWidthZ) * 4 + 2]);
+				diff += 5*abs(0 - imgBbuffer[(x + z * maxWidthZ) * 4 + 3]);
 			}
 	}
 	//writeImagePNG((char*)"test2.png", maxWidthZ, maxHeightZ, imgBbuffer, title);
@@ -370,8 +451,8 @@ long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert, int siz
 };
 
 void SetImage(Voxel* vArray, imgInfo actImage, int rotation) {
-	int diffX = maxWidth - actImage.width;
-	int diffY = maxHeight - actImage.height;
+	int diffX = (maxWidth - actImage.width)/2;
+	int diffY = (maxHeight - actImage.height)/2;
 
 	for (int x = diffX; x < maxWidthZ; x++)
 		for (int y = 0; y < maxWidthZ; y++)
@@ -382,12 +463,17 @@ void SetImage(Voxel* vArray, imgInfo actImage, int rotation) {
 				if ((imgX < actImage.width) && (imgZ < actImage.height))
 				{
 					Voxel tempvox;
-					tempvox.color.a = 255;// (actImage.buffer[x + z * actImage.width].a) ? 0 : 255;
+					tempvox.color.a = actImage.buffer[imgX + imgZ * actImage.width].a;
 					tempvox.color.r = actImage.buffer[imgX + imgZ * actImage.width].r;
 					tempvox.color.g = actImage.buffer[imgX + imgZ * actImage.width].g;
 					tempvox.color.b = actImage.buffer[imgX + imgZ * actImage.width].b;
-					if((tempvox.color.r==0x80)&& (tempvox.color.g == 0x80)&& (tempvox.color.b == 0x80))
+					/*if ((tempvox.color.r == 0x80) && (tempvox.color.g == 0x80) && (tempvox.color.b == 0x80))
+					{
+						tempvox.color.r = 0;
+						tempvox.color.g = 0;
+						tempvox.color.b = 0;
 						tempvox.color.a = 0;
+					}*/
 
 					vArray[x * maxWHZ + y * maxHeightZ + z] = tempvox;
 				}
@@ -400,6 +486,15 @@ void SaveImage(Voxel* vArray, int rotation, char* filename) {
 	int imgWidth = maxWidth;
 	int imgHeight = maxHeight;
 	Bit8u* imgBbuffer = (Bit8u*)malloc(maxWidthZ * maxHeightZ * 4);
+
+	for (int x = 0; x != maxWidthZ; x++)
+		for (int y = 0; y != maxHeightZ; y++)
+		{
+			imgBbuffer[(x + y * maxWidthZ) * 4 + 0] = 0;
+			imgBbuffer[(x + y * maxWidthZ) * 4 + 1] = 0;
+			imgBbuffer[(x + y * maxWidthZ) * 4 + 2] = 0;
+			imgBbuffer[(x + y * maxWidthZ) * 4 + 3] = 0;
+		}
 
 	float s = sin(rotation * 0.0174533);
 	float c = cos(rotation * 0.0174533);
@@ -420,16 +515,17 @@ void SaveImage(Voxel* vArray, int rotation, char* filename) {
 	int maxY = maxWidthZ;
 	int addY = 1;
 
+	float tempAddCenter = ((maxWidthZ-1) * 0.5 * zoom);
+
 	for (int x = minX; x != maxX; x+= addX)
-		for (int y = minY; y != maxY; y+= addY)
+		for (int y = minY; y != maxY; y += addY)
+		{
+			int newX = ((x - tempAddCenter) * c - (y - tempAddCenter) * s) + tempAddCenter+0.01;
+			int newY = ((x - tempAddCenter) * s + (y - tempAddCenter) * c) + tempAddCenter+0.01;
+			if ((newX < 0) || (newY < 0))
+				continue;
 			for (int z = 0; z < maxHeightZ; z++)
 			{
-				//if(y>0)continue;
-				//if (x > 50)continue;
-				int newX = ((x- (maxWidthZ/2*zoom)) * c - (y- (maxWidthZ / 2 * zoom)) * s) + (maxWidthZ / 2 * zoom);
-				int newY = ((x- (maxWidthZ/2*zoom)) * s + (y- (maxWidthZ / 2 * zoom)) * c) + (maxWidthZ / 2 * zoom);
-				if ((newX < 0) || (newY < 0))
-					continue;
 				if (vArray[newX * maxWHZ + newY * maxHeightZ + z].color.a == 255)
 				{
 					imgBbuffer[(x + z * maxWidthZ) * 4 + 0] = vArray[newX * maxWHZ + newY * maxHeightZ + z].color.r;
@@ -444,38 +540,23 @@ void SaveImage(Voxel* vArray, int rotation, char* filename) {
 				imgBbuffer[(x + z * maxWidthZ) * 4 + 3] = vArray[x * maxWHZ + y * maxHeightZ + z].color.a;
 				*/
 			}
+		}
 	//createPng((char*)"test2.png", 10, 10);
 	writeImagePNG(filename, maxWidthZ, maxHeightZ, imgBbuffer, title);
 	free(imgBbuffer);
 };
 
-void RandomMutage(Voxel* vArray, int size) {
-	if (size == 1)
+void RandomMutage(Voxel* vArray, vector<TColor>** canColorArray) {
 	{
 		int x = fast_rand() % maxWidthZ;
 		int y = fast_rand() % maxWidthZ;
 		int z = fast_rand() % maxHeightZ;
-		int color = fast_rand() % 4;
-		int step = (fast_rand() % 2) ? 1 : -1;
-		TColor oldColor = vArray[x * maxWHZ + y * maxHeightZ + z].color;
-		switch (color)
-		{
-		case 0:
-			oldColor.r += step;
-			break;
-		case 1:
-			oldColor.g += step;
-			break;
-		case 2:
-			oldColor.b += step;
-			break;
-		case 3:
-			oldColor.a += step;
-			break;
-		}
-		vArray[x * maxWHZ + y * maxHeightZ + z].color = oldColor;
+
+		int color = fast_rand() % canColorArray[x * maxWHZ + y * maxHeightZ + z]->size();
+		TColor randcolor = (*canColorArray[x * maxWHZ + y * maxHeightZ + z])[color];
+		vArray[x * maxWHZ + y * maxHeightZ + z].color = randcolor;
 	}
-	else
+	/*else
 	{
 		int xMin = fast_rand() % ((int)(maxWidthZ / size));
 		int yMin = fast_rand() % ((int)(maxWidthZ / size));
@@ -485,7 +566,7 @@ void RandomMutage(Voxel* vArray, int size) {
 		for (int x = xMin* size; x < (xMin+1) * size; x++)
 			for (int y = yMin * size; y < (yMin + 1) * size; y++)
 				for (int z = zMin * size; z < (zMin + 1) * size; z++)
-				{
+				{					
 					TColor oldColor = vArray[x * maxWHZ + y * maxHeightZ + z].color;
 					switch (color)
 					{
@@ -504,8 +585,7 @@ void RandomMutage(Voxel* vArray, int size) {
 					}
 					vArray[x * maxWHZ + y * maxHeightZ + z].color = oldColor;
 				}
-	}
-
+	}*/
 };
 
 void CopyArray(Voxel* vArray, Voxel* vArray2) {
@@ -985,6 +1065,19 @@ int main()
 			*/
 			imgInfo actimg;
 			read_png_file(filechar,&actimg);
+			for (uint32_t x = 0; x < actimg.width; x++)
+				for (uint32_t y = 0; y < actimg.height; y++)
+				{
+					if ((actimg.buffer[y * actimg.width + x].r == 0x80) &&
+						(actimg.buffer[y * actimg.width + x].g == 0x80) &&
+						(actimg.buffer[y * actimg.width + x].b == 0x80))
+					{
+						actimg.buffer[y * actimg.width + x].r = 0;
+						actimg.buffer[y * actimg.width + x].g = 0;
+						actimg.buffer[y * actimg.width + x].b = 0;
+						actimg.buffer[y * actimg.width + x].a = 0;
+					}
+				}
 			images.push_back(actimg);
         }
     }
@@ -1003,37 +1096,44 @@ int main()
 	Voxel* vArray = (Voxel*)malloc(sizeof(Voxel) * maxWidthZ * maxWidthZ * maxHeightZ);
 	Voxel* tempArray = (Voxel*)malloc(sizeof(Voxel) * maxWidthZ * maxWidthZ * maxHeightZ);
 
+	//vector<TColor>* canColorArray = (vector<TColor>*)malloc(sizeof(TColor) * maxWidthZ * maxWidthZ * maxHeightZ);
+	vector<TColor>** canColorArray = new vector<TColor>*[sizeof(TColor) * maxWidthZ * maxWidthZ * maxHeightZ];
+	const int maxColors = 100;
+	for (uint32_t x = 0; x < maxWidthZ; x++)
+		for (uint32_t y = 0; y < maxWidthZ; y++)
+			for (uint32_t z = 0; z < maxHeightZ; z++)
+				canColorArray[x * maxWHZ + y * maxHeightZ + z] = new vector<TColor>[maxColors];
+				//canColorArray[x * maxWHZ + y * maxHeightZ + z] = new vector<TColor>[10];
+
+	AddCanColor(canColorArray, images[0], 0, true);
+	AddCanColor(canColorArray, images[1], -90, true);
+	AddTranspColor(canColorArray);
+
 	//SetRandom(vArray);
 	SetTransparent(vArray);
 	//SetImage(vArray, images[0],0);
-	SaveImage(vArray, -90,(char*)"test90.png");
+	SaveImage(vArray, 0,(char*)"test00.png");
+
 
 	long diff=0;
 	long bestdiff = 10000000000000000;
 
-	int addStep = 10;
+	int addStep = 30;
 	//int addStep2 = 20;
-	int oldStep = 10;
-	long oldScoreDiff = 0;
+	//int oldStep = 100;
+	//long oldScoreDiff = 0;
 	long oldScore = 0;
 	long actDiff = 0;
-	int dir = 1;
-	int dir2 = 1;
-
-	double veryLongScore = 0;
-	double longScore = 0;
-	double shortScore = 0;
-
-	int size = 20;
+	int countSame = 0;
 
 	for (long step = 0; step < 1000000; step++)
 	{
 		diff = 0;
 		CopyArray(vArray, tempArray);
-		//for (long step2 = 0; step2 < addStep; step2++)
-			RandomMutage(vArray, size);
-		diff += Compare(vArray, images[0], 0, true, size);
-		diff += Compare(vArray, images[1], -90, true, size);
+		for (long step2 = 0; step2 < addStep; step2++)
+			RandomMutage(vArray, canColorArray);
+		diff += Compare(vArray, images[0], 0, true);
+		diff += Compare(vArray, images[1], -90, true);
 		if (diff <= bestdiff)
 		{
 			bestdiff = diff;
@@ -1044,30 +1144,14 @@ int main()
 		}
 
 		actDiff = oldScore - bestdiff;
-		veryLongScore = 0.99 * veryLongScore + 0.01 * actDiff;
-		longScore = 0.95 * longScore + 0.5 * actDiff;
-		shortScore = 0.9 * shortScore + 0.1 * actDiff;
 		oldScore = bestdiff;
-		if (step % 10 == 0)
+		if (actDiff==0)countSame++;
+		if (countSame > 2000)
 		{
-			if (shortScore > veryLongScore)
-			{
-				dir *= -1;
-			}
-			addStep += dir;
-			if (addStep < 1)addStep = 1;
+			countSame = 0;
+			if (addStep > 1)addStep--;
 		}
-		if (step % 100 == 0)
-		{
-			if (longScore > veryLongScore)
-			{
-				dir2 *= -1;
-			}
-			size += dir;
-			if (size < 1)size = 1;
-			if (size > 50)size = 50;
-		}
-		if (step % 100 == 0)
+		if (step % 1000 == 0)
 		{
 			/*if (oldScoreDiff > actDiff)
 				dir *= -1;
@@ -1082,11 +1166,18 @@ int main()
 			SaveImage(vArray, -90, (char*)"test90.png");
 			//SaveVox6(tempArray);
 		}
-		if (step % 1000 == 0)
+		if (step % 5000 == 0)
 			SaveVox6(tempArray);
-		if (step % 50 == 0)
-			cout << bestdiff << " " << actDiff << " " << addStep << " " << size << " " << step % 100 << endl;
+		if (step % 100 == 0)
+			cout << bestdiff << " " << actDiff << " " << addStep << endl;
 	}
+
+	//clearing
+	for (uint32_t x = 0; x < maxWidthZ; x++)
+		for (uint32_t y = 0; y < maxWidthZ; y++)
+			for (uint32_t z = 0; z < maxHeightZ; z++)
+				delete(canColorArray[x * maxWHZ + y * maxHeightZ + z]);
+	//free(canColorArray);
 	free(vArray);
 	free(tempArray);
 	freeBuffers(images);
