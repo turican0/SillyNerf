@@ -304,7 +304,7 @@ void AddTranspColor(vector<TColor>** vArray) {
 			}
 };
 
-void AddCanColor(vector<TColor>** vArray, imgInfo actImage, int rotation, bool invert) {
+void AddCanColor(vector<TColor>** vArray, imgInfo actImage, float rotation, bool invert) {
 	//int imgWidth = maxWidth;
 	//int imgHeight = maxHeight;
 	//Bit8u* imgBbuffer = (Bit8u*)malloc(maxWidthZ * maxHeightZ * 4);
@@ -1055,14 +1055,31 @@ int main()
 
     std::vector<imgInfo> images;
 
-    for (const auto& file : std::filesystem::directory_iterator(inputDir)) {
-        if (file.path().extension() == ".png") {
+	std::vector<std::string> filenames;
+
+	for (const auto& file : std::filesystem::directory_iterator(inputDir)) {
+		if (file.path().extension() == ".png") {
+
+			filenames.push_back(file.path().string());
+			//char filechar[2000];
+			//wcstombs_s(nullptr, filechar, file.path().c_str(), 2000);
+		 }
+	}
+	std::sort(filenames.begin(), filenames.end());
+	for(int f=0;f< filenames.size();f++)
+	{
+		{
+			//char filechar[2000];
+			//strcpy_s(filechar, filenames[f].c_str());
+			
 			char filechar[2000];
-			wcstombs_s(nullptr, filechar, file.path().c_str(), 2000);
+			strcpy_s(filechar, filenames[f].c_str());
+			//wcstombs_s(nullptr, filechar, file.path().c_str(), 2000);
 			/*size_t i;
 			wcstombs_s(&i, pMBBuffer, (size_t)BUFFER_SIZE,
 				pWCBuffer, (size_t)BUFFER_SIZE - 1); // -1 so the appended NULL doesn't fall outside the allocated buffer
 			*/
+			//char* filechar2 = (char*)"TMAPS2-0-000-00.pngGr.png";
 			imgInfo actimg;
 			read_png_file(filechar,&actimg);
 			for (uint32_t x = 0; x < actimg.width; x++)
@@ -1106,7 +1123,13 @@ int main()
 				//canColorArray[x * maxWHZ + y * maxHeightZ + z] = new vector<TColor>[10];
 
 	AddCanColor(canColorArray, images[0], 0, true);
-	AddCanColor(canColorArray, images[1], -90, true);
+	AddCanColor(canColorArray, images[1], -22.5, true);
+	AddCanColor(canColorArray, images[2], -45, true);
+	AddCanColor(canColorArray, images[3], -67.5, true);
+	AddCanColor(canColorArray, images[4], -90, true);
+	AddCanColor(canColorArray, images[5], -112.5, true);
+	AddCanColor(canColorArray, images[6], -135, true);
+	AddCanColor(canColorArray, images[7], -157.5, true);
 	AddTranspColor(canColorArray);
 
 	//SetRandom(vArray);
@@ -1133,7 +1156,14 @@ int main()
 		for (long step2 = 0; step2 < addStep; step2++)
 			RandomMutage(vArray, canColorArray);
 		diff += Compare(vArray, images[0], 0, true);
-		diff += Compare(vArray, images[1], -90, true);
+		diff += Compare(vArray, images[1], -22.5, true);
+		diff += Compare(vArray, images[2], -45, true);
+		diff += Compare(vArray, images[3], -67.5, true);
+		diff += Compare(vArray, images[4], 90, true);
+		diff += Compare(vArray, images[5], -112.5, true);
+		diff += Compare(vArray, images[6], 135, true);
+		diff += Compare(vArray, images[7], -157.5, true);
+
 		if (diff <= bestdiff)
 		{
 			bestdiff = diff;
