@@ -318,6 +318,15 @@ void AddCanColor(vector<TColor>** vArray, imgInfo actImage, float rotation, bool
 	int minY = 0;
 	int maxY = maxWidthZ;
 	int addY = 1;
+	if (invert)
+	{
+		minX = maxWidthZ-1;
+		maxX = -1;
+		addX = -1;
+		minY = maxWidthZ-1;
+		maxY = -1;
+		addY = -1;
+	}
 
 	float tempAddCenter = ((maxWidthZ - 1) * 0.5 * zoom);
 
@@ -327,6 +336,8 @@ void AddCanColor(vector<TColor>** vArray, imgInfo actImage, float rotation, bool
 			int newX = ((x - tempAddCenter) * c - (y - tempAddCenter) * s) + tempAddCenter + 0.01;
 			int newY = ((x - tempAddCenter) * s + (y - tempAddCenter) * c) + tempAddCenter + 0.01;
 			if ((newX < 0) || (newY < 0))
+				continue;
+			if ((newX > maxWidthZ-1) || (newY > maxWidthZ-1))
 				continue;
 			int tempIndex = newX * maxWHZ + newY * maxHeightZ;
 			for (int z = 0; z < maxHeightZ; z++)
@@ -348,6 +359,7 @@ void AddCanColor(vector<TColor>** vArray, imgInfo actImage, float rotation, bool
 				else
 				{
 					bool isIncluded = false;
+
 					for (int i = 0; i < vArray[tempIndex + z]->size(); i++)
 						if ((color.r == (*vArray[tempIndex + z])[i].r) &&
 							(color.g == (*vArray[tempIndex + z])[i].g) &&
@@ -394,6 +406,8 @@ long Compare(Voxel* vArray, imgInfo actImage, int rotation, bool invert) {
 			int newX = ((x - tempAddCenter) * c - (y - tempAddCenter) * s) + tempAddCenter + 0.01;
 			int newY = ((x - tempAddCenter) * s + (y - tempAddCenter) * c) + tempAddCenter + 0.01;
 			if ((newX < 0) || (newY < 0))
+				continue;
+			if ((newX > maxWidthZ-1) || (newY > maxWidthZ-1))
 				continue;
 			int tempIndex = newX * maxWHZ + newY * maxHeightZ;
 			for (int z = 0; z < maxHeightZ; z++)
@@ -523,6 +537,8 @@ void SaveImage(Voxel* vArray, int rotation, char* filename) {
 			int newX = ((x - tempAddCenter) * c - (y - tempAddCenter) * s) + tempAddCenter+0.01;
 			int newY = ((x - tempAddCenter) * s + (y - tempAddCenter) * c) + tempAddCenter+0.01;
 			if ((newX < 0) || (newY < 0))
+				continue;
+			if ((newX > maxWidthZ-1) || (newY > maxWidthZ-1))
 				continue;
 			for (int z = 0; z < maxHeightZ; z++)
 			{
@@ -1114,24 +1130,33 @@ int main()
 	Voxel* tempArray = (Voxel*)malloc(sizeof(Voxel) * maxWidthZ * maxWidthZ * maxHeightZ);
 
 	//vector<TColor>* canColorArray = (vector<TColor>*)malloc(sizeof(TColor) * maxWidthZ * maxWidthZ * maxHeightZ);
-	vector<TColor>** canColorArray = new vector<TColor>*[sizeof(TColor) * maxWidthZ * maxWidthZ * maxHeightZ];
+	vector<TColor>** canColorArray = new vector<TColor>*[maxWidthZ * maxWidthZ * maxHeightZ];
 	const int maxColors = 100;
 	for (uint32_t x = 0; x < maxWidthZ; x++)
 		for (uint32_t y = 0; y < maxWidthZ; y++)
 			for (uint32_t z = 0; z < maxHeightZ; z++)
 				canColorArray[x * maxWHZ + y * maxHeightZ + z] = new vector<TColor>[maxColors];
 				//canColorArray[x * maxWHZ + y * maxHeightZ + z] = new vector<TColor>[10];
-
-	AddCanColor(canColorArray, images[0], 0, true);
-	AddCanColor(canColorArray, images[1], -22.5, true);
-	AddCanColor(canColorArray, images[2], -45, true);
-	AddCanColor(canColorArray, images[3], -67.5, true);
-	AddCanColor(canColorArray, images[4], -90, true);
-	AddCanColor(canColorArray, images[5], -112.5, true);
+	
+	cout << "bef0"<< endl;
+	AddCanColor(canColorArray, images[0], 0, false);
+	cout << "aft1" << endl;
+	/*AddCanColor(canColorArray, images[1], -22.5, false);
+	cout << "aft2" << endl;
+	AddCanColor(canColorArray, images[2], -45, false);
+	cout << "aft3" << endl;
+	AddCanColor(canColorArray, images[3], -67.5, false);
+	cout << "aft4" << endl;*/
+	AddCanColor(canColorArray, images[4], -90, false);
+	cout << "aft5" << endl;
+	/*AddCanColor(canColorArray, images[5], -112.5, true);
+	cout << "aft6" << endl;
 	AddCanColor(canColorArray, images[6], -135, true);
+	cout << "aft7" << endl;
 	AddCanColor(canColorArray, images[7], -157.5, true);
+	cout << "aft8" << endl;*/
 	AddTranspColor(canColorArray);
-
+	cout << "aftTR" << endl;
 	//SetRandom(vArray);
 	SetTransparent(vArray);
 	//SetImage(vArray, images[0],0);
@@ -1149,20 +1174,20 @@ int main()
 	long actDiff = 0;
 	int countSame = 0;
 
-	for (long step = 0; step < 1000000; step++)
+	for (long step = 0; step < 1000000000; step++)
 	{
 		diff = 0;
 		CopyArray(vArray, tempArray);
 		for (long step2 = 0; step2 < addStep; step2++)
 			RandomMutage(vArray, canColorArray);
-		diff += Compare(vArray, images[0], 0, true);
-		diff += Compare(vArray, images[1], -22.5, true);
-		diff += Compare(vArray, images[2], -45, true);
-		diff += Compare(vArray, images[3], -67.5, true);
-		diff += Compare(vArray, images[4], 90, true);
-		diff += Compare(vArray, images[5], -112.5, true);
+		diff += Compare(vArray, images[0], 0, false);
+		/*diff += Compare(vArray, images[1], -22.5, false);
+		diff += Compare(vArray, images[2], -45, false);
+		diff += Compare(vArray, images[3], -67.5, false);*/
+		diff += Compare(vArray, images[4], 90, false);
+		/*diff += Compare(vArray, images[5], -112.5, true);
 		diff += Compare(vArray, images[6], 135, true);
-		diff += Compare(vArray, images[7], -157.5, true);
+		diff += Compare(vArray, images[7], -157.5, true);*/
 
 		if (diff <= bestdiff)
 		{
@@ -1193,7 +1218,14 @@ int main()
 			addStep += dir;
 			if (addStep < 1)addStep = 1;*/
 			SaveImage(vArray, 0, (char*)"test00.png");
+			/*SaveImage(vArray, -22.5, (char*)"test22.png");
+			SaveImage(vArray, -45, (char*)"test45.png");
+			SaveImage(vArray, -67.5, (char*)"test67.png");*/
 			SaveImage(vArray, -90, (char*)"test90.png");
+			/*SaveImage(vArray, -112.5, (char*)"test112.png");
+			SaveImage(vArray, -135, (char*)"test135.png");
+			SaveImage(vArray, -157.5, (char*)"test157.png");*/
+			
 			//SaveVox6(tempArray);
 		}
 		if (step % 5000 == 0)

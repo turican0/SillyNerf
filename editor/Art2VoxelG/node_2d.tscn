@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://b12f55x8q1nci"]
+
+[ext_resource type="Script" path="res://Sprite2D.cs" id="1_mq3pt"]
+[ext_resource type="Script" path="res://TextureRect.cs" id="2_ukc7y"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+scale = Vector2(5, 5)
+offset = Vector2(50, 50)
+script = ExtResource("1_mq3pt")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_ukc7y")

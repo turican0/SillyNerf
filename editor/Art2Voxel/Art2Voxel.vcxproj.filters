@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Zdrojové soubory">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Hlavičkové soubory">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Soubory zdrojů">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="libs">
+      <UniqueIdentifier>{ef945b76-3d2a-41bb-9e98-b0e270cf3a35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zdrojové soubory\kiss">
+      <UniqueIdentifier>{d72be6e6-053a-4dad-b43d-996fdabc9c5f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Art2Voxel.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\kiss_sdl-master\kiss_draw.cpp">
+      <Filter>Zdrojové soubory\kiss</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\kiss_sdl-master\kiss_general.cpp">
+      <Filter>Zdrojové soubory\kiss</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\kiss_sdl-master\kiss_posix.cpp">
+      <Filter>Zdrojové soubory\kiss</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\kiss_sdl-master\kiss_widgets.cpp">
+      <Filter>Zdrojové soubory\kiss</Filter>
+    </ClCompile>
+    <ClCompile Include="port_filesystem.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="libs\SDL2_image-2.0.5\lib\x64\SDL2_image.lib">
+      <Filter>libs</Filter>
+    </Library>
+    <Library Include="libs\sdl2-2.0.8\lib\x64\SDL2.lib">
+      <Filter>libs</Filter>
+    </Library>
+    <Library Include="libs\sdl2-2.0.8\lib\x64\SDL2main.lib">
+      <Filter>libs</Filter>
+    </Library>
+    <Library Include="libs\sdl2-2.0.8\lib\x64\SDL2test.lib">
+      <Filter>libs</Filter>
+    </Library>
+    <Library Include="libs\SDL2_ttf-2.0.15\lib\x64\SDL2_ttf.lib">
+      <Filter>libs</Filter>
+    </Library>
+    <Library Include="libs\libpng3\lib\libpng16.lib">
+      <Filter>libs</Filter>
+    </Library>
+    <Library Include="libs\libpng3\lib\libpng16_static.lib">
+      <Filter>libs</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libs\kiss_sdl-master\kiss_sdl.h">
+      <Filter>Zdrojové soubory\kiss</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
