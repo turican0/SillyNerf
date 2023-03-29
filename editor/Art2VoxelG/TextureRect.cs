@@ -7,8 +7,11 @@ using static System.Net.Mime.MediaTypeNames;
 
 [Tool]
 public partial class TextureRect : Godot.TextureRect{
-    public bool first_run = true;
+    private bool first_run = true;
     // Called when the node enters the scene tree for the first time.
+    private Vector2 mousePosMiddle;
+    private Vector2 mousePosPosition;
+    private bool middlePressed = false;
     public override void _Ready()
     {      
         StartRun();
@@ -125,23 +128,51 @@ public partial class TextureRect : Godot.TextureRect{
                 else if (mouseButtonEvent.Pressed && mouseButtonEvent.ButtonIndex == MouseButton.WheelUp)
                 {
                     Vector2 currentScale = this.Scale;
-                    currentScale.X *= 1.1f;
-                    currentScale.Y *= 1.1f;
+                    currentScale.X *= 1.25992104989f;
+                    currentScale.Y *= 1.25992104989f;
                     this.Scale = currentScale;
                 }
                 else if (mouseButtonEvent.Pressed && mouseButtonEvent.ButtonIndex == MouseButton.WheelDown)
                 {
                     Vector2 currentScale = this.Scale;
-                    currentScale.X *= 0.9f;
-                    currentScale.Y *= 0.9f;
+                    currentScale.X /= 1.25992104989f;
+                    currentScale.Y /= 1.25992104989f;
                     this.Scale = currentScale;
+
+                    /*Vector2 actMousePos = GetViewport().GetMousePosition();
+                    Vector2 currentPosition = this.Position;
+                    currentPosition.X -= actMousePos.X * 1.25992104989f;
+                    currentPosition.Y -= actMousePos.Y * 1.25992104989f;
+                    this.Position = currentPosition;*/
+                }
+                else if (mouseButtonEvent.Pressed && mouseButtonEvent.ButtonIndex == MouseButton.Middle)
+                {
+                    //GD.Print("Middle mouse button pressed");
+                    mousePosMiddle = GetViewport().GetMousePosition();
+                    mousePosPosition = this.Position;
+                    middlePressed = true;
+                }
+                else if (!mouseButtonEvent.Pressed && mouseButtonEvent.ButtonIndex == MouseButton.Middle)
+                {
+                    //GD.Print("Middle mouse button released");
+                    middlePressed = false;
                 }
             }
             else if (inputEvent is InputEventMouseMotion mouseMotionEvent)
             {
                 if (mouseMotionEvent.Relative != Vector2.Zero)
                 {
-                    GD.Print("Mouse moved");
+                    //GD.Print("Mouse moved");
+                    if(middlePressed)
+                    {
+                        Vector2 currentScale = this.Scale;
+                        Vector2 actMousePos = GetViewport().GetMousePosition();
+                        //Vector2 currentPosition = this.Position;
+                        Vector2 currentPosition;
+                        currentPosition.X = mousePosPosition.X + actMousePos.X - mousePosMiddle.X;
+                        currentPosition.Y = mousePosPosition.Y + actMousePos.Y - mousePosMiddle.Y;
+                        this.Position = currentPosition;
+                    }
                 }
             }
         }

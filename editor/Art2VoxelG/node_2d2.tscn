@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://6mxceekfpbif"]
+
+[ext_resource type="Texture2D" uid="uid://kk4nhcpobovb" path="res://TMAPS2-0-000-00.pngGr.png" id="1_3wesi"]
+[ext_resource type="Script" path="res://TextureRect.cs" id="1_rly31"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Window" type="Window" parent="."]
+position = Vector2i(20, 50)
+size = Vector2i(500, 500)
+
+[node name="HSlider" type="HSlider" parent="Window"]
+offset_top = 480.0
+offset_right = 100.0
+offset_bottom = 496.0
+value = 50.0
+
+[node name="TextEdit" type="TextEdit" parent="Window"]
+offset_left = 110.0
+offset_top = 472.0
+offset_right = 142.0
+offset_bottom = 507.0
+text = "0"
+
+[node name="HSlider2" type="HSlider" parent="Window"]
+offset_left = 150.0
+offset_top = 480.0
+offset_right = 250.0
+offset_bottom = 496.0
+value = 50.0
+
+[node name="TextEdit2" type="TextEdit" parent="Window"]
+offset_left = 260.0
+offset_top = 470.0
+offset_right = 292.0
+offset_bottom = 505.0
+text = "0"
+
+[node name="VSlider" type="VSlider" parent="Window"]
+offset_left = 480.0
+offset_right = 496.0
+offset_bottom = 100.0
+value = 50.0
+
+[node name="TextEdit3" type="TextEdit" parent="Window"]
+offset_left = 480.0
+offset_top = 110.0
+offset_right = 512.0
+offset_bottom = 145.0
+text = "0"
+
+[node name="VSlider2" type="VSlider" parent="Window"]
+offset_left = 480.0
+offset_top = 150.0
+offset_right = 496.0
+offset_bottom = 250.0
+value = 50.0
+
+[node name="TextEdit4" type="TextEdit" parent="Window"]
+offset_left = 480.0
+offset_top = 260.0
+offset_right = 512.0
+offset_bottom = 295.0
+text = "0"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Window"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="Window/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(480, 480)
+render_target_update_mode = 4
+
+[node name="MyTextureRect" type="TextureRect" parent="Window/SubViewportContainer/SubViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(10, 10)
+texture = ExtResource("1_3wesi")
+script = ExtResource("1_rly31")

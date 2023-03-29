@@ -4,15 +4,20 @@
 [ext_resource type="Script" path="res://TextureRect.cs" id="2_ulp3s"]
 
 [node name="Node2D" type="Node2D"]
+scale = Vector2(50, 50)
 
 [node name="Window" type="Window" parent="."]
-position = Vector2i(20, 40)
+position = Vector2i(50, 50)
 size = Vector2i(500, 500)
 
 [node name="MyTextureRect" type="TextureRect" parent="Window"]
 texture_filter = 1
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 79.0
+offset_bottom = 65.0
 scale = Vector2(10, 10)
 texture = ExtResource("1_o3j8s")
 script = ExtResource("2_ulp3s")
+
+[node name="VSlider" type="VSlider" parent="."]
+offset_right = 16.0
+offset_bottom = 8.0
