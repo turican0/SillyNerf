@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b12f55x8q1nci"]
+[gd_scene load_steps=3 format=3 uid="uid://d4kh4kwu7dggi"]
 
 [ext_resource type="Texture2D" uid="uid://kk4nhcpobovb" path="res://TMAPS2-0-000-00.pngGr.png" id="1_o3j8s"]
-[ext_resource type="Script" path="res://TextureRect.cs" id="2_ukc7y"]
+[ext_resource type="Script" path="res://TextureRect.cs" id="2_ulp3s"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -9,10 +9,10 @@
 position = Vector2i(20, 40)
 size = Vector2i(500, 500)
 
-[node name="TextureRect" type="TextureRect" parent="Window"]
+[node name="MyTextureRect" type="TextureRect" parent="Window"]
 texture_filter = 1
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(10, 10)
 texture = ExtResource("1_o3j8s")
-script = ExtResource("2_ukc7y")
+script = ExtResource("2_ulp3s")

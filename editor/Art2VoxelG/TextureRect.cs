@@ -1,53 +1,56 @@
-using Godot;
+Ôªøusing Godot;
 using System;
 
-[Tool]
-public partial class TextureRect : Godot.TextureRect
+//[Tool]
+public partial class MyTextureRect : Godot.TextureRect
 {
-    public bool first_run=true;
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-        first_run = false;
+    public bool first_run = true;
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {      
         StartRun();
     }
 
     private void StartRun()
     {
-        LoadImageAsTexture("res://TMAPS2-0-000-00.pngGr.png");
-        //SetGrid();
+        if (first_run)
+        {
+            first_run = false;
+            LoadImageAsTexture("res://TMAPS2-0-000-00.pngGr.png");
+            SetGrid();
+        }
     }
-    //TextureRect childnode;
     private void SetGrid()
     {
-        // ZÌsk·nÌ velikosti TextureRect
+        TextureRect childGridMode = new TextureRect();
+        // Z√≠sk√°n√≠ velikosti TextureRect
         Vector2 rectSize = this.Texture.GetSize();
 
-        // Vytvo¯enÌ novÈho Image s bÌl˝m pozadÌm, odpovÌdajÌcÌ velikosti TextureRect
+        // Vytvo≈ôen√≠ nov√©ho Image s b√≠l√Ωm pozad√≠m, odpov√≠daj√≠c√≠ velikosti TextureRect
         //Image gridImage = Image.Create((int)rectSize.X, (int)rectSize.Y, false, Image.Format.Rgba8);
         //childnode.Texture = new Texture();
-        // NastavenÌ barvy Ëar na öedou
+        // Nastaven√≠ barvy ƒçar na ≈°edou
         Color lineColor = new Color(0.5f, 0.5f, 0.5f);
 
-        // NakreslenÌ vodorovn˝ch Ëar
-        for (int y = 0; y < rectSize.Y; y += 1)
+        // Nakreslen√≠ vodorovn√Ωch ƒçar
+        for (int y = 0; y < rectSize.Y; y++)
         {
-            DrawLine(new Vector2(0, y), new Vector2(rectSize.X, y), lineColor);
+            childGridMode.DrawLine(new Vector2(0, y), new Vector2(rectSize.X, y), lineColor);
         }
 
-        // NakreslenÌ svisl˝ch Ëar
-        for (int x = 0; x < rectSize.X; x += 1)
-        {
-            DrawLine(new Vector2(x, 0), new Vector2(x, rectSize.Y), lineColor);
-        }
+        // Nakreslen√≠ svisl√Ωch ƒçar
+        ////for (int x = 0; x < rectSize.X; x += 1)
+        ////{
+        ////    childGridMode.DrawLine(new Vector2(x, 0), new Vector2(x, rectSize.Y), lineColor);
+        ////}
 
-        // Vytvo¯enÌ novÈho Texture z Image
+        // Vytvo≈ôen√≠ nov√©ho Texture z Image
         //Texture gridTexture = new Texture();
         //gridTexture.CreateFromImage(gridImage);
 
-        // NastavenÌ novÈho Texture na TextureRect
+        // Nastaven√≠ nov√©ho Texture na TextureRect
         //textureRect.Texture = gridTexture;
-        //this.AddChild(childnode);
+        AddChild(childGridMode);
     }
 
     private void LoadImageAsTexture(string imagePath)
@@ -57,16 +60,12 @@ public partial class TextureRect : Godot.TextureRect
         this.Texture = icon;
 
     }
-    
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
-	{
-        if (first_run)
-        {
-            first_run = false;
-            //StartRun();
-        }
-	}
+    {
+            StartRun();
+    }
 
     public override void _Input(InputEvent inputEvent)
     {
