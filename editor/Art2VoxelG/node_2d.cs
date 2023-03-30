@@ -1,17 +1,33 @@
+using Art2Voxel;
 using Godot;
 using System;
+using System.IO;
+//using System.IO; //for Get directory
 
 public partial class node_2d : Node2D
 {
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	VoxelClass voxelClass;
+
+    public override void _Ready()
 	{
-        var node2D = new Node2D();
-        AddChild(node2D);
+		voxelClass = new VoxelClass();
+		AnalyzeFolder("res://img/");
+        voxelClass.CreateVoxelArray();
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private void AnalyzeFolder(string directoryPath)
+	{
+        //string[] files = Directory.GetFiles(directoryPath);
+        string[] files = Directory.GetFiles(ProjectSettings.GlobalizePath(directoryPath), "*.png");
+        foreach (string file in files)
+        {
+            voxelClass.AnalyzeImage(file);
+        }
+    }	
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 	}
 }

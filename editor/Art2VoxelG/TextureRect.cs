@@ -23,7 +23,7 @@ public partial class TextureRect : Godot.TextureRect{
             if (first_run)
             {
                 first_run = false;
-                LoadImageAsTexture("res://TMAPS2-0-000-00.pngGr.png");
+                LoadImageAsTexture("res://img/TMAPS2-0-000-00.pngGr.png");
                 //loadB();
                 SetGrid();
                 var node2D = new Node2D();
