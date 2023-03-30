@@ -26,8 +26,6 @@ public partial class TextureRect : Godot.TextureRect{
                 LoadImageAsTexture("res://img/TMAPS2-0-000-00.pngGr.png");
                 //loadB();
                 SetGrid();
-                var node2D = new Node2D();
-                AddChild(node2D);
             }
     }
 
@@ -56,16 +54,9 @@ public partial class TextureRect : Godot.TextureRect{
         currentScale.Y = 1.0f/ scale;
         childGridMode.Scale = currentScale;
         Vector2 rectSize = Texture.GetSize();
-
-        // Vytvoření nové textury 100x100
         ImageTexture texture = new ImageTexture();
         Godot.Image image = Godot.Image.Create((int)(rectSize.X* scale), (int)(rectSize.Y* scale), false, Godot.Image.Format.Rgba8);
-        // Nakreslení šikmé čáry
         var color = new Godot.Color(255, 255, 255, 255);
-        /*for (int i = 0; i < 100; i++)
-        {
-            image.SetPixel(i, i, color);
-        }*/
         for (int y = 0; y < rectSize.Y* scale; y++)
             for (int x = 0; x < rectSize.X* scale; x += scale)
                 image.SetPixel(x, y, new Godot.Color(0, 0, 0, 255));
@@ -73,27 +64,7 @@ public partial class TextureRect : Godot.TextureRect{
             for (int x = 0; x < rectSize.X* scale; x++)
                 image.SetPixel(x, y, new Godot.Color(0, 0, 0, 255));
         texture = ImageTexture.CreateFromImage(image);
-        // Použití textury jako zdroje pro zobrazení TextureRect
         childGridMode.Texture = texture;
-
-
-        /*
-        var texture = new ImageTexture();
-        var gridImage = Godot.Image.Create((int)rectSize.X, (int)rectSize.Y, false, Godot.Image.Format.Rgba8);
-        //childGridMode.Texture = texture;
-
-        //gridImage.lock();
-        for (int y = 0; y < rectSize.Y; y++)
-            for (int x = 0; x < rectSize.X; x+=10)
-                gridImage.SetPixel(x, y, new Godot.Color(0,0,0,255));
-        for (int y = 0; y < rectSize.Y; y+=10)
-            for (int x = 0; x < rectSize.X; x++)
-                gridImage.SetPixel(x, y, new Godot.Color(0, 0, 0,255));
-
-        texture = ImageTexture.CreateFromImage(gridImage);
-        //gridImage.unlock();
-        */
-
         AddChild(childGridMode);
     }
 
