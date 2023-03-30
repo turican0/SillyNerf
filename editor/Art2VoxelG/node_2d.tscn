@@ -1,23 +1,109 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4kh4kwu7dggi"]
+[gd_scene load_steps=7 format=3 uid="uid://cwwjngmfk67uv"]
 
+[ext_resource type="Script" path="res://HSlider1.cs" id="1_daak5"]
 [ext_resource type="Texture2D" uid="uid://kk4nhcpobovb" path="res://TMAPS2-0-000-00.pngGr.png" id="1_o3j8s"]
+[ext_resource type="Script" path="res://HSlider1TE.cs" id="2_llevw"]
 [ext_resource type="Script" path="res://TextureRect.cs" id="2_ulp3s"]
+[ext_resource type="Script" path="res://VSlider1.cs" id="3_wsqbw"]
+[ext_resource type="Script" path="res://VSlider1TE.cs" id="4_lr35r"]
 
 [node name="Node2D" type="Node2D"]
-scale = Vector2(50, 50)
 
 [node name="Window" type="Window" parent="."]
-position = Vector2i(50, 50)
+position = Vector2i(20, 50)
 size = Vector2i(500, 500)
 
-[node name="MyTextureRect" type="TextureRect" parent="Window"]
-texture_filter = 1
-offset_right = 79.0
-offset_bottom = 65.0
+[node name="HSlider1" type="Node2D" parent="Window"]
+
+[node name="HSlider1" type="HSlider" parent="Window/HSlider1"]
+offset_top = 480.0
+offset_right = 100.0
+offset_bottom = 496.0
+value = 50.0
+script = ExtResource("1_daak5")
+
+[node name="HSlider1TE" type="TextEdit" parent="Window/HSlider1/HSlider1"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = -8.0
+offset_right = 155.0
+offset_bottom = 27.0
+script = ExtResource("2_llevw")
+
+[node name="HSlider2" type="Node2D" parent="Window"]
+position = Vector2(200, 0)
+
+[node name="HSlider1" type="HSlider" parent="Window/HSlider2"]
+offset_top = 480.0
+offset_right = 100.0
+offset_bottom = 496.0
+value = 50.0
+script = ExtResource("1_daak5")
+
+[node name="HSlider1TE" type="TextEdit" parent="Window/HSlider2/HSlider1"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = -8.0
+offset_right = 155.0
+offset_bottom = 27.0
+script = ExtResource("2_llevw")
+
+[node name="VSlider1" type="Node2D" parent="Window"]
+
+[node name="VSlider1" type="VSlider" parent="Window/VSlider1"]
+offset_left = 480.0
+offset_right = 496.0
+offset_bottom = 100.0
+value = 50.0
+script = ExtResource("3_wsqbw")
+
+[node name="VSlider1TE" type="TextEdit" parent="Window/VSlider1/VSlider1"]
+layout_mode = 0
+offset_top = 110.0
+offset_right = 45.0
+offset_bottom = 145.0
+text = "50"
+script = ExtResource("4_lr35r")
+
+[node name="VSlider2" type="Node2D" parent="Window"]
+position = Vector2(0, 200)
+
+[node name="VSlider1" type="VSlider" parent="Window/VSlider2"]
+offset_left = 480.0
+offset_right = 496.0
+offset_bottom = 100.0
+value = 50.0
+script = ExtResource("3_wsqbw")
+
+[node name="VSlider1TE" type="TextEdit" parent="Window/VSlider2/VSlider1"]
+layout_mode = 0
+offset_top = 110.0
+offset_right = 45.0
+offset_bottom = 145.0
+text = "50"
+script = ExtResource("4_lr35r")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Window"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="Window/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(480, 480)
+render_target_update_mode = 4
+
+[node name="MyTextureRect" type="TextureRect" parent="Window/SubViewportContainer/SubViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
 scale = Vector2(10, 10)
 texture = ExtResource("1_o3j8s")
 script = ExtResource("2_ulp3s")
 
-[node name="VSlider" type="VSlider" parent="."]
-offset_right = 16.0
-offset_bottom = 8.0
+[connection signal="value_changed" from="Window/HSlider1/HSlider1" to="Window/HSlider1/HSlider1/HSlider1TE" method="_on_h_slider_1_value_changed"]
+[connection signal="text_changed" from="Window/HSlider1/HSlider1/HSlider1TE" to="Window/HSlider1/HSlider1" method="_on_h_slider_1te_text_changed"]
+[connection signal="value_changed" from="Window/HSlider2/HSlider1" to="Window/HSlider2/HSlider1/HSlider1TE" method="_on_h_slider_1_value_changed"]
+[connection signal="text_changed" from="Window/HSlider2/HSlider1/HSlider1TE" to="Window/HSlider2/HSlider1" method="_on_h_slider_1te_text_changed"]
+[connection signal="value_changed" from="Window/VSlider1/VSlider1" to="Window/VSlider1/VSlider1/VSlider1TE" method="_on_v_slider_1_value_changed"]
+[connection signal="text_changed" from="Window/VSlider1/VSlider1/VSlider1TE" to="Window/VSlider1/VSlider1" method="_on_v_slider_1te_text_changed"]
+[connection signal="value_changed" from="Window/VSlider2/VSlider1" to="Window/VSlider2/VSlider1/VSlider1TE" method="_on_v_slider_1_value_changed"]
+[connection signal="text_changed" from="Window/VSlider2/VSlider1/VSlider1TE" to="Window/VSlider2/VSlider1" method="_on_v_slider_1te_text_changed"]
