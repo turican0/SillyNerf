@@ -61,6 +61,8 @@ namespace Art2Voxel
                 for (int y = 0; y < size; y++)
                     for (int z = 0; z < maxZ; z++)
                     {
+                        if (imgCopy[x, y] == new Godot.Color(0.5019608f, 0.5019608f, 0.5019608f, 1))
+                            imgCopy[x, y].A = 0;
                         voxArray[x, y, z] = imgCopy[x, y];
                         //voxArray[x, y, z] = image.GetPixel(x,z);
                         //voxArray[x, y, z].R = imgData[(x + z * image.GetWidth())*2 + 0] / (float)256;// image.GetPixel(x,z);
@@ -80,5 +82,42 @@ namespace Art2Voxel
             }
         }
 
+        internal static Color[,] GetImage(double rotation)
+        {
+            Godot.Color[,] imgCopy = new Godot.Color[maxXY, maxZ];
+            double s = Math.Sin(rotation * 0.0174533);
+            double c = Math.Cos(rotation * 0.0174533);
+
+            int maxXYZ = maxXY * maxZ;
+            int zoom = 1;
+            int minX = 0;
+            int maxX = maxXY;
+            int addX = 1;
+            int minY = 0;
+            int maxY = maxXY;
+            int addY = 1;
+
+            double tempAddCenter = ((maxXY - 1) * 0.5 * zoom);
+
+            for (int x = minX; x != maxX; x += addX)
+                for (int y = minY; y != maxY; y += addY)
+                {
+                    int newX = (int)(((x - tempAddCenter) * c - (y - tempAddCenter) * s) + tempAddCenter + 0.01);
+                    int newY = (int)(((x - tempAddCenter) * s + (y - tempAddCenter) * c) + tempAddCenter + 0.01);
+                    if ((newX < 0) || (newY < 0))
+                        continue;
+                    if ((newX > maxXY - 1) || (newY > maxXY - 1))
+                        continue;
+                    //int tempIndex = newX * maxXYZ + newY * maxZ;
+                    for (int z = 0; z < maxZ; z++)
+                    {
+                        if (voxArray[x, y, z].A == 1)
+                        {
+                            imgCopy[x,z] = voxArray[x, y, z];
+                        }
+                    }
+                }
+            return imgCopy;
+        }
     }
 }

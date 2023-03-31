@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwwjngmfk67uv"]
+[gd_scene load_steps=8 format=3 uid="uid://ike0sckbfhvb"]
 
 [ext_resource type="Script" path="res://HSlider1.cs" id="1_daak5"]
 [ext_resource type="Script" path="res://node_2d.cs" id="1_s8fhl"]
@@ -115,6 +115,13 @@ offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(10, 10)
 script = ExtResource("7_kfqv0")
+
+[node name="TextEdit" type="TextEdit" parent="Window"]
+offset_left = 600.0
+offset_top = 430.0
+offset_right = 650.0
+offset_bottom = 480.0
+text = "0"
 
 [connection signal="value_changed" from="Window/HSlider1/HSlider1" to="Window/HSlider1/HSlider1/HSlider1TE" method="_on_h_slider_1_value_changed"]
 [connection signal="text_changed" from="Window/HSlider1/HSlider1/HSlider1TE" to="Window/HSlider1/HSlider1" method="_on_h_slider_1te_text_changed"]
