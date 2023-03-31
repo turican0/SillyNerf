@@ -116,12 +116,25 @@ offset_bottom = 40.0
 scale = Vector2(10, 10)
 script = ExtResource("7_kfqv0")
 
-[node name="TextEdit" type="TextEdit" parent="Window"]
+[node name="OptionButton" type="OptionButton" parent="Window"]
 offset_left = 600.0
-offset_top = 430.0
+offset_top = 400.0
 offset_right = 650.0
-offset_bottom = 480.0
-text = "0"
+offset_bottom = 450.0
+item_count = 6
+selected = 0
+popup/item_0/text = "0"
+popup/item_0/id = 0
+popup/item_1/text = "10"
+popup/item_1/id = 1
+popup/item_2/text = "20"
+popup/item_2/id = 2
+popup/item_3/text = "30"
+popup/item_3/id = 3
+popup/item_4/text = "40"
+popup/item_4/id = 4
+popup/item_5/text = "50"
+popup/item_5/id = 5
 
 [connection signal="value_changed" from="Window/HSlider1/HSlider1" to="Window/HSlider1/HSlider1/HSlider1TE" method="_on_h_slider_1_value_changed"]
 [connection signal="text_changed" from="Window/HSlider1/HSlider1/HSlider1TE" to="Window/HSlider1/HSlider1" method="_on_h_slider_1te_text_changed"]
@@ -131,3 +144,4 @@ text = "0"
 [connection signal="text_changed" from="Window/VSlider1/VSlider1/VSlider1TE" to="Window/VSlider1/VSlider1" method="_on_v_slider_1te_text_changed"]
 [connection signal="value_changed" from="Window/VSlider2/VSlider1" to="Window/VSlider2/VSlider1/VSlider1TE" method="_on_v_slider_1_value_changed"]
 [connection signal="text_changed" from="Window/VSlider2/VSlider1/VSlider1TE" to="Window/VSlider2/VSlider1" method="_on_v_slider_1te_text_changed"]
+[connection signal="item_selected" from="Window/OptionButton" to="Window/SubViewportContainer2/SubViewport/MyTextureRectVox" method="_on_option_button_item_selected"]
