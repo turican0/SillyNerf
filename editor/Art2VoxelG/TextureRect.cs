@@ -57,8 +57,8 @@ public partial class TextureRect : Godot.TextureRect{
         Vector2 currentScale = Scale;
         //currentScale.X = 1.0f/ scale;
         //currentScale.Y = 1.0f/ scale;
-        currentScale.X = 1.0f * (((rectSize.X + 1) * scale) / (float)((rectSize.X * scale) + 1));
-        currentScale.Y = 1.0f * (((rectSize.X + 1) * scale) / (float)((rectSize.Y * scale) + 1));
+        currentScale.X = 1.0f / scale;// * (((rectSize.X + 1) * scale) / (float)((rectSize.X * scale) + 1));
+        currentScale.Y = 1.0f / scale;// * (((rectSize.X + 1) * scale) / (float)((rectSize.Y * scale) + 1));
         childGridMode.Scale = currentScale;
         ImageTexture texture = new ImageTexture();
         Godot.Image image = Godot.Image.Create(1+(int)(rectSize.X* scale), 1+(int)(rectSize.Y* scale), false, Godot.Image.Format.Rgba8);
@@ -81,7 +81,29 @@ public partial class TextureRect : Godot.TextureRect{
 
         Texture = icon;
         TextureFilter = TextureFilterEnum.Nearest;
+        Size = icon.GetSize();
+        int newScale = (int)(400 / Size.X);
+        if(newScale>256)
+            newScale = 256;
+        else if (newScale > 128)
+            newScale = 128;
+        else if (newScale > 64)
+            newScale = 64;
+        else if (newScale > 32)
+            newScale = 32;
+        else if (newScale > 16)
+            newScale = 16;
+        else if (newScale > 8)
+            newScale = 8;
+        else if (newScale > 4)
+            newScale = 4;
+        else if (newScale > 2)
+            newScale = 2;
+        else newScale = 1;
+        Scale = new Vector2(newScale, newScale);
 
+        //Vector2 voxelSize = VoxelClass.GetSize();
+        //Position = (Size - voxelSize) / 2;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -177,5 +199,22 @@ public partial class TextureRect : Godot.TextureRect{
                 }
             }
         }
+    }
+
+    internal void UpdatePos()
+    {
+        Vector2 voxelSize = VoxelClass.GetSize();
+        Position = -(Size - voxelSize) / 2;
+        MyTextureRectVox myTextureRectVox = (MyTextureRectVox)GetNode("./MyTextureRectVox");
+        //Window/SubViewportContainer/SubViewport/MyTextureRect/MyTextureRectVox
+        //Window/SubViewportContainer/SubViewport/MyTextureRect/MyTextureRectVox
+        myTextureRectVox.Position = new Vector2(-Position.X + 0.1f, -Position.Y + 0.1f);
+    }
+
+    public void _on_option_button_item_selected2(long index)
+    {
+        string[] files = Directory.GetFiles(ProjectSettings.GlobalizePath("res://img/"), "*.png");
+        LoadImageAsTexture(files[index]);
+        UpdatePos();
     }
 }

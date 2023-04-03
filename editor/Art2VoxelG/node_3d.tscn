@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bui7inm07462s"]
+
+[ext_resource type="Script" path="res://node_3d.cs" id="1_s5jyj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gomay"]
+albedo_color = Color(0, 1, 0, 1)
+
+[node name="Node3DVoxel" type="Node3D"]
+script = ExtResource("1_s5jyj")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+visible = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+material = SubResource("StandardMaterial3D_gomay")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.383441, 1.42843e-09, 0.923565, 0.922043, 0.0573897, -0.382809, -0.0530032, 0.998352, 0.0220056, 0, 0, 4)
+projection = 1
+size = 150.0

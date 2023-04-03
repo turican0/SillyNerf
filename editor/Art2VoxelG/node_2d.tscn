@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ike0sckbfhvb"]
+[gd_scene load_steps=9 format=3 uid="uid://0ksfp7u5lnwn"]
 
 [ext_resource type="Script" path="res://HSlider1.cs" id="1_daak5"]
 [ext_resource type="Script" path="res://node_2d.cs" id="1_s8fhl"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://TextureRect.cs" id="2_ulp3s"]
 [ext_resource type="Script" path="res://VSlider1.cs" id="3_wsqbw"]
 [ext_resource type="Script" path="res://VSlider1TE.cs" id="4_lr35r"]
+[ext_resource type="Texture2D" uid="uid://kk4nhcpobovb" path="res://img/TMAPS2-0-000-00.pngGr.png" id="6_w838u"]
 [ext_resource type="Script" path="res://MyTextureRectVox.cs" id="7_kfqv0"]
 
 [node name="Node2D" type="Node2D"]
@@ -13,7 +14,7 @@ script = ExtResource("1_s8fhl")
 
 [node name="Window" type="Window" parent="."]
 position = Vector2i(20, 50)
-size = Vector2i(1000, 500)
+size = Vector2i(500, 500)
 
 [node name="HSlider1" type="Node2D" parent="Window"]
 
@@ -94,11 +95,25 @@ handle_input_locally = false
 size = Vector2i(480, 480)
 render_target_update_mode = 4
 
+[node name="ColorRect" type="ColorRect" parent="Window/SubViewportContainer/SubViewport"]
+offset_right = 480.0
+offset_bottom = 480.0
+color = Color(0, 1, 0, 1)
+
 [node name="MyTextureRect" type="TextureRect" parent="Window/SubViewportContainer/SubViewport"]
+texture_filter = 1
+offset_right = 79.0
+offset_bottom = 65.0
+scale = Vector2(4, 4)
+texture = ExtResource("6_w838u")
+script = ExtResource("2_ulp3s")
+
+[node name="MyTextureRectVox" type="TextureRect" parent="Window/SubViewportContainer/SubViewport/MyTextureRect"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(10, 10)
-script = ExtResource("2_ulp3s")
+script = ExtResource("7_kfqv0")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Window"]
 offset_left = 520.0
@@ -110,31 +125,166 @@ handle_input_locally = false
 size = Vector2i(480, 480)
 render_target_update_mode = 4
 
-[node name="MyTextureRectVox" type="TextureRect" parent="Window/SubViewportContainer2/SubViewport"]
+[node name="OptionButton" type="OptionButton" parent="Window"]
+offset_left = 400.0
+offset_top = 400.0
+offset_right = 484.0
+offset_bottom = 450.0
+item_count = 8
+selected = 0
+popup/item_0/text = "0"
+popup/item_0/id = 0
+popup/item_1/text = "22.5"
+popup/item_1/id = 1
+popup/item_2/text = "45"
+popup/item_2/id = 2
+popup/item_3/text = "67.5"
+popup/item_3/id = 3
+popup/item_4/text = "90"
+popup/item_4/id = 4
+popup/item_5/text = "112,5"
+popup/item_5/id = 5
+popup/item_6/text = "135"
+popup/item_6/id = 6
+popup/item_7/text = "157,5"
+popup/item_7/id = 7
+
+[node name="Window2" type="Window" parent="."]
+position = Vector2i(600, 50)
+size = Vector2i(500, 500)
+
+[node name="HSlider1" type="Node2D" parent="Window2"]
+
+[node name="HSlider1" type="HSlider" parent="Window2/HSlider1"]
+offset_top = 480.0
+offset_right = 100.0
+offset_bottom = 496.0
+value = 50.0
+script = ExtResource("1_daak5")
+
+[node name="HSlider1TE" type="TextEdit" parent="Window2/HSlider1/HSlider1"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = -8.0
+offset_right = 155.0
+offset_bottom = 27.0
+script = ExtResource("2_llevw")
+
+[node name="HSlider2" type="Node2D" parent="Window2"]
+position = Vector2(200, 0)
+
+[node name="HSlider1" type="HSlider" parent="Window2/HSlider2"]
+offset_top = 480.0
+offset_right = 100.0
+offset_bottom = 496.0
+value = 50.0
+script = ExtResource("1_daak5")
+
+[node name="HSlider1TE" type="TextEdit" parent="Window2/HSlider2/HSlider1"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = -8.0
+offset_right = 155.0
+offset_bottom = 27.0
+script = ExtResource("2_llevw")
+
+[node name="VSlider1" type="Node2D" parent="Window2"]
+
+[node name="VSlider1" type="VSlider" parent="Window2/VSlider1"]
+offset_left = 480.0
+offset_right = 496.0
+offset_bottom = 100.0
+value = 50.0
+script = ExtResource("3_wsqbw")
+
+[node name="VSlider1TE" type="TextEdit" parent="Window2/VSlider1/VSlider1"]
+layout_mode = 0
+offset_top = 110.0
+offset_right = 45.0
+offset_bottom = 145.0
+text = "50"
+script = ExtResource("4_lr35r")
+
+[node name="VSlider2" type="Node2D" parent="Window2"]
+position = Vector2(0, 200)
+
+[node name="VSlider1" type="VSlider" parent="Window2/VSlider2"]
+offset_left = 480.0
+offset_right = 496.0
+offset_bottom = 100.0
+value = 50.0
+script = ExtResource("3_wsqbw")
+
+[node name="VSlider1TE" type="TextEdit" parent="Window2/VSlider2/VSlider1"]
+layout_mode = 0
+offset_top = 110.0
+offset_right = 45.0
+offset_bottom = 145.0
+text = "50"
+script = ExtResource("4_lr35r")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Window2"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="Window2/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(480, 480)
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="Window2/SubViewportContainer/SubViewport"]
+offset_right = 480.0
+offset_bottom = 480.0
+color = Color(0, 1, 0, 1)
+
+[node name="MyTextureRect" type="TextureRect" parent="Window2/SubViewportContainer/SubViewport"]
+texture_filter = 1
+offset_right = 79.0
+offset_bottom = 65.0
+scale = Vector2(4, 4)
+texture = ExtResource("6_w838u")
+script = ExtResource("2_ulp3s")
+
+[node name="MyTextureRectVox" type="TextureRect" parent="Window2/SubViewportContainer/SubViewport/MyTextureRect"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(10, 10)
 script = ExtResource("7_kfqv0")
 
-[node name="OptionButton" type="OptionButton" parent="Window"]
-offset_left = 600.0
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Window2"]
+offset_left = 520.0
+offset_right = 1000.0
+offset_bottom = 480.0
+
+[node name="SubViewport" type="SubViewport" parent="Window2/SubViewportContainer2"]
+handle_input_locally = false
+size = Vector2i(480, 480)
+render_target_update_mode = 4
+
+[node name="OptionButton" type="OptionButton" parent="Window2"]
+offset_left = 400.0
 offset_top = 400.0
-offset_right = 650.0
+offset_right = 484.0
 offset_bottom = 450.0
-item_count = 6
+item_count = 8
 selected = 0
 popup/item_0/text = "0"
 popup/item_0/id = 0
-popup/item_1/text = "10"
+popup/item_1/text = "22.5"
 popup/item_1/id = 1
-popup/item_2/text = "20"
+popup/item_2/text = "45"
 popup/item_2/id = 2
-popup/item_3/text = "30"
+popup/item_3/text = "67.5"
 popup/item_3/id = 3
-popup/item_4/text = "40"
+popup/item_4/text = "90"
 popup/item_4/id = 4
-popup/item_5/text = "50"
+popup/item_5/text = "112,5"
 popup/item_5/id = 5
+popup/item_6/text = "135"
+popup/item_6/id = 6
+popup/item_7/text = "157,5"
+popup/item_7/id = 7
 
 [connection signal="value_changed" from="Window/HSlider1/HSlider1" to="Window/HSlider1/HSlider1/HSlider1TE" method="_on_h_slider_1_value_changed"]
 [connection signal="text_changed" from="Window/HSlider1/HSlider1/HSlider1TE" to="Window/HSlider1/HSlider1" method="_on_h_slider_1te_text_changed"]
@@ -144,4 +294,13 @@ popup/item_5/id = 5
 [connection signal="text_changed" from="Window/VSlider1/VSlider1/VSlider1TE" to="Window/VSlider1/VSlider1" method="_on_v_slider_1te_text_changed"]
 [connection signal="value_changed" from="Window/VSlider2/VSlider1" to="Window/VSlider2/VSlider1/VSlider1TE" method="_on_v_slider_1_value_changed"]
 [connection signal="text_changed" from="Window/VSlider2/VSlider1/VSlider1TE" to="Window/VSlider2/VSlider1" method="_on_v_slider_1te_text_changed"]
-[connection signal="item_selected" from="Window/OptionButton" to="Window/SubViewportContainer2/SubViewport/MyTextureRectVox" method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="Window/OptionButton" to="Window/SubViewportContainer/SubViewport/MyTextureRect/MyTextureRectVox" method="_on_option_button_item_selected"]
+[connection signal="value_changed" from="Window2/HSlider1/HSlider1" to="Window2/HSlider1/HSlider1/HSlider1TE" method="_on_h_slider_1_value_changed"]
+[connection signal="text_changed" from="Window2/HSlider1/HSlider1/HSlider1TE" to="Window2/HSlider1/HSlider1" method="_on_h_slider_1te_text_changed"]
+[connection signal="value_changed" from="Window2/HSlider2/HSlider1" to="Window2/HSlider2/HSlider1/HSlider1TE" method="_on_h_slider_1_value_changed"]
+[connection signal="text_changed" from="Window2/HSlider2/HSlider1/HSlider1TE" to="Window2/HSlider2/HSlider1" method="_on_h_slider_1te_text_changed"]
+[connection signal="value_changed" from="Window2/VSlider1/VSlider1" to="Window2/VSlider1/VSlider1/VSlider1TE" method="_on_v_slider_1_value_changed"]
+[connection signal="text_changed" from="Window2/VSlider1/VSlider1/VSlider1TE" to="Window2/VSlider1/VSlider1" method="_on_v_slider_1te_text_changed"]
+[connection signal="value_changed" from="Window2/VSlider2/VSlider1" to="Window2/VSlider2/VSlider1/VSlider1TE" method="_on_v_slider_1_value_changed"]
+[connection signal="text_changed" from="Window2/VSlider2/VSlider1/VSlider1TE" to="Window2/VSlider2/VSlider1" method="_on_v_slider_1te_text_changed"]
+[connection signal="item_selected" from="Window2/OptionButton" to="Window2/SubViewportContainer/SubViewport/MyTextureRect/MyTextureRectVox" method="_on_option_button_item_selected"]
